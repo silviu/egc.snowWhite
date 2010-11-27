@@ -10,18 +10,22 @@ public class Scene extends Applet implements KeyListener, Runnable
 	static final int OFFSET_GRID   = 10;
 	static final int BOARD_WIDTH   = 1000;
 	static final int BOARD_HEIGHT  = 600;
-	
+
 	Image offscreen;
 
 	int delay, frame;
-	
+
 	Graphics g_main, bufferGraphics;
 	public static int window_width, window_height;
 	public static int keyState;
 	static Color bg_color = Color.white;
 	Thread animator = new Thread(this);
+	public boolean first_time = true;
 	
-	@Override
+	Cub cub = new Cub(100, 600, 300, 3);
+
+	Floor floor = new Floor();
+
 	public void init() {
 		addKeyListener(this);
 		int fps = 50;
@@ -30,17 +34,15 @@ public class Scene extends Applet implements KeyListener, Runnable
 		bufferGraphics = offscreen.getGraphics();
 	}
 
-	@Override
 	public void start() {
 		animator.start();
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	public void stop() {
 		animator.stop();
 	}
 
-	@Override
 	public void run() {
 		// Remember the starting time
 		long tm = System.currentTimeMillis();
@@ -56,7 +58,7 @@ public class Scene extends Applet implements KeyListener, Runnable
 			frame++;
 		}
 	}
-	@Override
+
 	public void paint(Graphics g_main) {
 		window_width  = this.getSize().width;
 		window_height = this.getSize().height;
@@ -65,40 +67,41 @@ public class Scene extends Applet implements KeyListener, Runnable
 
 		bufferGraphics.setColor(bg_color);
 		bufferGraphics.fillRect(0, 0, window_width, window_height);
+		floor.draw(bufferGraphics);
 		
-		g_main.drawImage(offscreen,0, 0, this);
+		cub.paint(bufferGraphics);
+		
+		
+		g_main.drawImage(offscreen, 0, 0, this);
 	}
 
-	@Override
+
 	public void update(Graphics g_main) {
 		paint(g_main);
 	}
 
-	@Override
 	public void keyPressed(KeyEvent ke) {
 		keyState = ke.getKeyCode();
 		//player.key_decide(keyState);
 	}
 
-	@Override
 	public void keyReleased(KeyEvent ke) {}
-	@Override
 	public void keyTyped(KeyEvent ke) {}
 	public void mouseEntered(MouseEvent e) {}
 	public void mouseExited(MouseEvent e) {}
 	public void mouseMoved(MouseEvent e) {}
 
+
 	public static void main (String[] args) {
 		Applet applet = new Scene();
 		Frame frame = new Frame();
 		frame.addWindowListener(new WindowAdapter() {
-			@Override
 			public void windowClosing(WindowEvent e) {
 				System.exit(0);
 			}
 		});
 
-		applet.setPreferredSize(new Dimension(BOARD_WIDTH,BOARD_HEIGHT));
+		applet.setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
 
 		frame.add(applet);
 		frame.pack();
