@@ -22,8 +22,8 @@ public class Scene extends Applet implements KeyListener, Runnable
 	Thread animator = new Thread(this);
 	public boolean first_time = true;
 	
-	Cub cub = new Cub(100, 600, 300, 3);
-
+	Queen queen = new Queen(600, 300, 3);
+	
 	Floor floor = new Floor();
 
 	public void init() {
@@ -69,8 +69,7 @@ public class Scene extends Applet implements KeyListener, Runnable
 		bufferGraphics.fillRect(0, 0, window_width, window_height);
 		floor.draw(bufferGraphics);
 		
-		cub.paint(bufferGraphics);
-		
+		queen.draw(bufferGraphics);
 		
 		g_main.drawImage(offscreen, 0, 0, this);
 	}
@@ -82,7 +81,7 @@ public class Scene extends Applet implements KeyListener, Runnable
 
 	public void keyPressed(KeyEvent ke) {
 		keyState = ke.getKeyCode();
-		//player.key_decide(keyState);
+		queen.key_decide(keyState);
 	}
 
 	public void keyReleased(KeyEvent ke) {}

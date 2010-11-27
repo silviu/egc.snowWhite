@@ -22,11 +22,14 @@ public class Floor {
 	      g2.setTransform(atrans);
 	}
 	
-	public void draw(Graphics g) {
-		//portView((Graphics2D) g);
+	public void draw(Graphics g_) {
+		Graphics2D g = (Graphics2D) g_;
+		portView(g);
 		g.setColor(Color.LIGHT_GRAY);
 		g.fillRect(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT);
 		g.setColor(Color.black);
 		g.drawRect(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT);
+		g.setTransform(new AffineTransform());
+		
 	}
 }
