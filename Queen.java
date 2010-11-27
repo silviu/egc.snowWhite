@@ -4,10 +4,10 @@ import java.awt.event.KeyEvent;
 import java.lang.Math;
 
 public class Queen {
-	double body_w = 100;
-	double body_h = 200;
-	double body_d = 40;
-	double head_size = 120;
+	double body_w = 20;
+	double body_h = 100;
+	double body_d = 15;
+	double head_size = 40;
 	double x, y, z;
 
 	public static final Color FILL_COLOR   = Color.BLACK;
@@ -17,14 +17,13 @@ public class Queen {
 	Cub head;
 
 	public Queen(double x, double y, double z) {
-		y+=88;
-		x+=80;
 		this.x = x;
 		this.y = y;
 		this.z = z;
 		double angle = (3*Math.PI/4) - Math.toRadians(35);
 		body = new Cub(x, y - body_h/2, z, body_w, body_h, body_d, FILL_COLOR, CONTUR_COLOR);
 		head = new Cub(x, y - body_h - (head_size/2), z, head_size, head_size, head_size, FILL_COLOR, CONTUR_COLOR);
+		
 		body.rotate_by_y(angle, x, y, z);
 		head.rotate_by_y(angle, x, y, z);
 
@@ -33,7 +32,7 @@ public class Queen {
 		body.rotate_by_z(angle, x, y, z);
 		head.rotate_by_z(angle, x, y, z);
 
-		angle = 0.205;
+		angle = 0.170;
 
 		body.rotate_by_x(angle, x, y, z);
 		head.rotate_by_x(angle, x, y, z);

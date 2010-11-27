@@ -18,11 +18,12 @@ public class Scene extends Applet implements KeyListener, Runnable
 	Graphics g_main, bufferGraphics;
 	public static int window_width, window_height;
 	public static int keyState;
-	static Color bg_color = Color.white;
+	public final static Color SKY_COLOR = Color.LIGHT_GRAY;
 	Thread animator = new Thread(this);
 	public boolean first_time = true;
 	
 	Queen queen = new Queen(600, 300, 3);
+	Mirror mirror = new Mirror(100, 100);
 	
 	Floor floor = new Floor();
 
@@ -65,11 +66,12 @@ public class Scene extends Applet implements KeyListener, Runnable
 
 		bufferGraphics.clearRect(0,0, window_width, window_height);
 
-		bufferGraphics.setColor(bg_color);
+		bufferGraphics.setColor(SKY_COLOR);
 		bufferGraphics.fillRect(0, 0, window_width, window_height);
 		floor.draw(bufferGraphics);
 		
 		queen.draw(bufferGraphics);
+		mirror.draw(bufferGraphics);
 		
 		g_main.drawImage(offscreen, 0, 0, this);
 	}

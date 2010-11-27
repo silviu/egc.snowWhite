@@ -25,7 +25,7 @@ public class Floor {
 	public void draw(Graphics g_) {
 		Graphics2D g = (Graphics2D) g_;
 		portView(g);
-		g.setColor(Color.LIGHT_GRAY);
+		g.setColor(Color.DARK_GRAY);
 		g.fillRect(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT);
 		g.setColor(Color.black);
 		g.drawRect(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT);

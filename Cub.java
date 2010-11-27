@@ -3,7 +3,9 @@ import java.awt.Graphics;
 import java.awt.Polygon;
 
 public class Cub{
-
+	
+	double SCALE = 4;
+	
     double POV = 500;
     double Offset = 0;
     Polygon T = new Polygon();
@@ -39,7 +41,6 @@ public class Cub{
     	this.fill = fill;
     	this.contur = contur;
     	calc_points();
-    	scale(2);
     }
     
     public void scale(double diff) {
