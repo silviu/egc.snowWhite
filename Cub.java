@@ -23,9 +23,9 @@ public class Cub {
 	double[] V5 = new double[12]; // DotProduct of Normal and POV
 
 	double CPX1, CPX2, CPX3, CPY1, CPY2, CPY3; // temp variables used in Cross
-												// Product
+	// Product
 	double CPZ1, CPZ2, CPZ3, DPX, DPY, DPZ; // temp variables used in Cross/Dot
-											// Product
+	// Product
 
 	double W, H, D;
 	double x, y, z;
@@ -65,14 +65,14 @@ public class Cub {
 		Pz = new double[] { -D + z, -D + z, -D + z, -D + z, D + z, D + z,
 				D + z, D + z }; // real z-coordinate, 8 points
 		PPx = new double[] { -W, -W, W, W, -W, -W, W, W }; // projected
-															// x-coordinate, 8
-															// points
+		// x-coordinate, 8
+		// points
 		PPy = new double[] { -H, H, H, -H, -H, H, H, -H }; // projected
-															// y-coordinate, 8
-															// points
+		// y-coordinate, 8
+		// points
 	}
 
-	public void SortByDepth(Graphics screen) {
+	public void SortByDepth() {
 		for (int i = 0; i < 12; i++) {
 			V4[i] = (Pz[V1[i]] + Pz[V2[i]] + Pz[V3[i]]) / 3;
 		}
@@ -99,7 +99,7 @@ public class Cub {
 		}
 	}
 
-	public void BackFaceCulling(Graphics screen) {
+	public void BackFaceCulling() {
 		for (int i = 0; i < 12; i++) {
 			// Cross Product
 			CPX1 = Px[V2[i]] - Px[V1[i]];
@@ -116,7 +116,7 @@ public class Cub {
 		}
 	}
 
-	public void ApplyProjection(Graphics screen) {
+	public void ApplyProjection() {
 		for (int i = 0; i < 8; i++) {
 			PPx[i] = Px[i];
 			PPy[i] = Py[i];
@@ -142,6 +142,23 @@ public class Cub {
 		}
 	}
 
+	public boolean intersects(double x, double y) {
+		for (int i = 0; i < 12; i++) {
+			if (V5[i] > 0) {
+				Polygon T = new Polygon();
+				T.addPoint((int) (PPx[V1[i]] + Offset),
+						(int) (PPy[V1[i]] + Offset));
+				T.addPoint((int) (PPx[V2[i]] + Offset),
+						(int) (PPy[V2[i]] + Offset));
+				T.addPoint((int) (PPx[V3[i]] + Offset),
+						(int) (PPy[V3[i]] + Offset));
+				if (T.intersects(x, y, 1, 1))
+					return true;
+			}
+		}
+		return false;
+	}
+
 	public void rotate_by_x(double Theta) {
 		rotate_by_x(Theta, x, y, z);
 	}
@@ -159,11 +176,11 @@ public class Cub {
 			oldY = Py[i] - y;
 			oldZ = Pz[i] - z;
 			Py[i] = oldY * Math.cos(Theta) - oldZ * Math.sin(Theta) + y; // rotate
-																			// about
-																			// X
+			// about
+			// X
 			Pz[i] = oldY * Math.sin(Theta) + oldZ * Math.cos(Theta) + z; // rotate
-																			// about
-																			// X
+			// about
+			// X
 		}
 	}
 
@@ -172,11 +189,11 @@ public class Cub {
 			oldX = Px[i] - x;
 			oldZ = Pz[i] - z;
 			Px[i] = oldZ * Math.sin(Theta) + oldX * Math.cos(Theta) + x; // rotate
-																			// about
-																			// Y
+			// about
+			// Y
 			Pz[i] = oldZ * Math.cos(Theta) - oldX * Math.sin(Theta) + z; // rotate
-																			// about
-																			// Y
+			// about
+			// Y
 		}
 	}
 
@@ -185,11 +202,11 @@ public class Cub {
 			oldX = Px[i] - x;
 			oldY = Py[i] - y;
 			Px[i] = oldX * Math.cos(Theta) - oldY * Math.sin(Theta) + x; // rotate
-																			// about
-																			// Z
+			// about
+			// Z
 			Py[i] = oldX * Math.sin(Theta) + oldY * Math.cos(Theta) + y; // rotate
-																			// about
-																			// Z
+			// about
+			// Z
 		}
 
 	}
@@ -201,9 +218,9 @@ public class Cub {
 	}
 
 	public void paint(Graphics screen) {
-		SortByDepth(screen);
-		BackFaceCulling(screen);
-		ApplyProjection(screen);
+		SortByDepth();
+		BackFaceCulling();
+		ApplyProjection();
 		drawCube(screen);
 		// RotatePoints();
 	}

@@ -62,6 +62,10 @@ public class Queen {
 		head.rotate_by_x(angle, x, y, z);
 	}
 
+	public boolean intersects(double x, double y){
+		return head.intersects(x, y) || body.intersects(x, y);
+	}
+
 	public void draw(Graphics g) {
 		body.paint(g);
 		head.paint(g);
@@ -84,7 +88,7 @@ public class Queen {
 		double dx = 0, dy = 0, dz = 0;
 		switch (key) {
 		case KeyEvent.VK_W:
-			if (n_moves_z == 18)
+			if (n_moves_z == 15)
 				break;
 			dz = -1;
 			n_moves_z++;
@@ -96,13 +100,13 @@ public class Queen {
 			n_moves_x--;
 			break;
 		case KeyEvent.VK_S:
-			if (n_moves_z == -39)
+			if (n_moves_z == -43)
 				break;
 			dz = 1;
 			n_moves_z--;
 			break;
 		case KeyEvent.VK_D:
-			if (n_moves_x == 90)
+			if (n_moves_x == 73)
 				break;
 			dx = 1;
 			n_moves_x++;
