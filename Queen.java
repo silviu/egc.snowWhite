@@ -4,11 +4,11 @@ import java.awt.event.KeyEvent;
 import java.lang.Math;
 
 public class Queen {
-	public final static int NORMAL_BODY_H = 70;
-	public final static int NORMAL_BODY_D = 15;
-	public final static int NORMAL_BODY_W = 20;
+	public final static int NORMAL_BODY_H = 30;
+	public final static int NORMAL_BODY_D = 7;
+	public final static int NORMAL_BODY_W = 10;
 
-	public final static int NORMAL_HEAD_SIZE = 30;
+	public final static int NORMAL_HEAD_SIZE = 15;
 	double body_w, body_h, body_d;
 	double head_size;
 	double x, y, z;

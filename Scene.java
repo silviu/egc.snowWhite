@@ -20,8 +20,8 @@ public class Scene extends Applet implements KeyListener, Runnable {
 	public final static Color SKY_COLOR = Color.LIGHT_GRAY;
 	Thread animator = new Thread(this);
 
-	Queen queen = new Queen(OGLINDA_X + 230, 350, 3, Color.black, Color.white);
-	SnowWhite snow = new SnowWhite(OGLINDA_X + 190, 350, 3, Color.white,
+	Queen queen = new Queen(OGLINDA_X + 345, 350, 3, Color.black, Color.white);
+	SnowWhite snow = new SnowWhite(OGLINDA_X + 150, 350, 3, Color.white,
 			Color.black);
 	
 	ArrayList<Dwarf> dwarfs = new ArrayList<Dwarf>();
@@ -32,8 +32,9 @@ public class Scene extends Applet implements KeyListener, Runnable {
 	public void create_dwarfs() {
 		double angle = 2 * Math.PI/7;
 		
-		for (int i = 0; i < 7; i++)
+		for (int i = 0; i < 7; i++) {
 			dwarfs.add(new Dwarf(snow, Color.GREEN, Color.black, angle*i));
+		}
 	}
 
 	public void init() {
@@ -85,12 +86,23 @@ public class Scene extends Applet implements KeyListener, Runnable {
 		
 		Graphics2D g2 = (Graphics2D) bufferGraphics;
 		g2.clip(mirror.inner_shape);
-		for (Dwarf dwarf : dwarfs)
-			dwarf.draw(bufferGraphics);
+		for (Dwarf dwarf : dwarfs) {
+			if (dwarf.angle >= 8*Math.PI/7)
+				dwarf.draw(bufferGraphics);
+		}
 		snow.draw(bufferGraphics);
+		
+		for (Dwarf dwarf : dwarfs) {
+			if (dwarf.angle < 8*Math.PI/7)
+				dwarf.draw(bufferGraphics);
+		}
 		
 		g2.setClip(null);
 
+		for (Dwarf dwarf : dwarfs) {
+			dwarf.animate();
+		}
+		
 		queen.draw(bufferGraphics);
 
 		g_main.drawImage(offscreen, 0, 0, this);
