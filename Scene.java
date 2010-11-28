@@ -1,15 +1,14 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.applet.*;
+import java.util.ArrayList;
 
-
-public class Scene extends Applet implements KeyListener, Runnable
-{
+public class Scene extends Applet implements KeyListener, Runnable {
 	private static final long serialVersionUID = 1L;
 
-	static final int OFFSET_GRID   = 10;
-	static final int BOARD_WIDTH   = 1000;
-	static final int BOARD_HEIGHT  = 600;
+	static final int OFFSET_GRID = 10;
+	static final int BOARD_WIDTH = 1000;
+	static final int BOARD_HEIGHT = 600;
 	public static final int OGLINDA_X = 200;
 
 	Image offscreen;
@@ -20,21 +19,30 @@ public class Scene extends Applet implements KeyListener, Runnable
 	public static int window_width, window_height;
 	public final static Color SKY_COLOR = Color.LIGHT_GRAY;
 	Thread animator = new Thread(this);
-	public boolean first_time = true;
-	
+
 	Queen queen = new Queen(OGLINDA_X + 230, 350, 3, Color.black, Color.white);
-	SnowWhite snow = new SnowWhite(OGLINDA_X + 190, 350, 3, Color.white, Color.black);
-	Dwarf dwarf = new Dwarf(100, 100, 3, Color.GREEN, Color.black);
-	Mirror mirror = new Mirror(OGLINDA_X, 270);
+	SnowWhite snow = new SnowWhite(OGLINDA_X + 190, 350, 3, Color.white,
+			Color.black);
 	
+	ArrayList<Dwarf> dwarfs = new ArrayList<Dwarf>();
+	Mirror mirror = new Mirror(OGLINDA_X, 270);
+
 	Floor floor = new Floor();
+	
+	public void create_dwarfs() {
+		double angle = 2 * Math.PI/7;
+		
+		for (int i = 0; i < 7; i++)
+			dwarfs.add(new Dwarf(snow, Color.GREEN, Color.black, angle*i));
+	}
 
 	public void init() {
 		addKeyListener(this);
 		int fps = 50;
 		delay = fps > 0 ? 1000 / fps : 100;
-		offscreen = createImage(this.getSize().width,this.getSize().height);
+		offscreen = createImage(this.getSize().width, this.getSize().height);
 		bufferGraphics = offscreen.getGraphics();
+		create_dwarfs();
 	}
 
 	public void start() {
@@ -56,35 +64,37 @@ public class Scene extends Applet implements KeyListener, Runnable
 			try {
 				tm += delay;
 				Thread.sleep(Math.max(0, tm - System.currentTimeMillis()));
-			} catch (InterruptedException e) {break;}
+			} catch (InterruptedException e) {
+				break;
+			}
 			// Advance the frame
 			frame++;
 		}
 	}
 
 	public void paint(Graphics g_main) {
-		window_width  = this.getSize().width;
+		window_width = this.getSize().width;
 		window_height = this.getSize().height;
 
-		bufferGraphics.clearRect(0,0, window_width, window_height);
+		bufferGraphics.clearRect(0, 0, window_width, window_height);
 
 		bufferGraphics.setColor(SKY_COLOR);
 		bufferGraphics.fillRect(0, 0, window_width, window_height);
 		floor.draw(bufferGraphics);
 		mirror.draw(bufferGraphics);
 		
-		dwarf.draw(bufferGraphics);
 		Graphics2D g2 = (Graphics2D) bufferGraphics;
 		g2.clip(mirror.inner_shape);
+		for (Dwarf dwarf : dwarfs)
+			dwarf.draw(bufferGraphics);
 		snow.draw(bufferGraphics);
+		
 		g2.setClip(null);
-		
-		
+
 		queen.draw(bufferGraphics);
-		
+
 		g_main.drawImage(offscreen, 0, 0, this);
 	}
-
 
 	public void update(Graphics g_main) {
 		paint(g_main);
@@ -94,16 +104,26 @@ public class Scene extends Applet implements KeyListener, Runnable
 		int keyState = ke.getKeyCode();
 		queen.key_decide(keyState);
 		snow.key_decide(keyState);
+		for (Dwarf dwarf : dwarfs)
+			dwarf.key_decide(keyState);
 	}
 
-	public void keyReleased(KeyEvent ke) {}
-	public void keyTyped(KeyEvent ke) {}
-	public void mouseEntered(MouseEvent e) {}
-	public void mouseExited(MouseEvent e) {}
-	public void mouseMoved(MouseEvent e) {}
+	public void keyReleased(KeyEvent ke) {
+	}
 
+	public void keyTyped(KeyEvent ke) {
+	}
 
-	public static void main (String[] args) {
+	public void mouseEntered(MouseEvent e) {
+	}
+
+	public void mouseExited(MouseEvent e) {
+	}
+
+	public void mouseMoved(MouseEvent e) {
+	}
+
+	public static void main(String[] args) {
 		Applet applet = new Scene();
 		Frame frame = new Frame();
 		frame.addWindowListener(new WindowAdapter() {

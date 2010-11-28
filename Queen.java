@@ -20,15 +20,19 @@ public class Queen {
 
 	Cub body;
 	Cub head;
-	
-	public Queen(double x, double y, double z, Color fill, Color contur, double scale) {
-		this(x, y, z, fill, contur, NORMAL_BODY_H*scale, NORMAL_BODY_D*scale, NORMAL_BODY_W*scale, NORMAL_HEAD_SIZE*scale);
+
+	public Queen(double x, double y, double z, Color fill, Color contur,
+			double scale) {
+		this(x, y, z, fill, contur, NORMAL_BODY_H * scale, NORMAL_BODY_D
+				* scale, NORMAL_BODY_W * scale, NORMAL_HEAD_SIZE * scale);
 	}
+
 	public Queen(double x, double y, double z, Color fill, Color contur) {
 		this(x, y, z, fill, contur, 1);
 	}
 
-	public Queen(double x, double y, double z, Color fill, Color contur, double body_h, double body_d, double body_w, double head_size) {
+	public Queen(double x, double y, double z, Color fill, Color contur,
+			double body_h, double body_d, double body_w, double head_size) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -38,14 +42,16 @@ public class Queen {
 		this.head_size = head_size;
 		this.fill_color = fill;
 		this.contur_color = contur;
-		double angle = (3*Math.PI/4) - Math.toRadians(35);
-		body = new Cub(x, y - body_h/2, z, body_w, body_h, body_d, fill_color, contur_color);
-		head = new Cub(x, y - body_h - (head_size/2), z, head_size, head_size, head_size, fill_color, contur_color);
-		
+		double angle = (3 * Math.PI / 4) - Math.toRadians(35);
+		body = new Cub(x, y - body_h / 2, z, body_w, body_h, body_d,
+				fill_color, contur_color);
+		head = new Cub(x, y - body_h - (head_size / 2), z, head_size,
+				head_size, head_size, fill_color, contur_color);
+
 		body.rotate_by_y(angle, x, y, z);
 		head.rotate_by_y(angle, x, y, z);
 
-		angle = - 0.04;
+		angle = -0.04;
 
 		body.rotate_by_z(angle, x, y, z);
 		head.rotate_by_z(angle, x, y, z);
@@ -60,10 +66,13 @@ public class Queen {
 		body.paint(g);
 		head.paint(g);
 	}
-	
+
 	public void update_position(double dx, double dy, double dz) {
-		dx *= 5; dy *= 5; dz *= 5;
-		dx -= dz; dy += dz;
+		dx *= 5;
+		dy *= 5;
+		dz *= 5;
+		dx -= dz;
+		dy += dz;
 		head.translate(dx, dy, dz);
 		body.translate(dx, dy, dz);
 		x += dx;
@@ -72,8 +81,8 @@ public class Queen {
 	}
 
 	public void key_decide(int key) {
-		double dx = 0, dy = 0,dz = 0;
-		switch(key) {
+		double dx = 0, dy = 0, dz = 0;
+		switch (key) {
 		case KeyEvent.VK_W:
 			if (n_moves_z == 18)
 				break;
