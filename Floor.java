@@ -8,18 +8,11 @@ public class Floor {
 	
 	public final static int WIDTH = 700;
 	public final static int HEIGHT = 300;
-	public static final int OFFSET_X = 400;
-	public static final int OFFSET_Y = 100;
-	
-	int x, y;
+	public static final int OFFSET_X = 585;
+	public static final int OFFSET_Y = 285;
 	
 	public void portView(Graphics2D g2) {
-		AffineTransform atrans = null;
-
-	    atrans = AffineTransform.getShearInstance(-1.0, 0);
-
-	    if (atrans != null)
-	      g2.setTransform(atrans);
+	    g2.setTransform(AffineTransform.getShearInstance(-1.0, 0));
 	}
 	
 	public void draw(Graphics g_) {

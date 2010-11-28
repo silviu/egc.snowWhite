@@ -17,13 +17,13 @@ public class Scene extends Applet implements KeyListener, Runnable
 
 	Graphics g_main, bufferGraphics;
 	public static int window_width, window_height;
-	public static int keyState;
 	public final static Color SKY_COLOR = Color.LIGHT_GRAY;
 	Thread animator = new Thread(this);
 	public boolean first_time = true;
 	
-	Queen queen = new Queen(600, 300, 3);
-	Mirror mirror = new Mirror(100, 100);
+	Queen queen = new Queen(600, 300, 3, Color.black, Color.white);
+	Queen snow = new Queen(300, 300, 3, Color.white, Color.black);
+	Mirror mirror = new Mirror(180, 270);
 	
 	Floor floor = new Floor();
 
@@ -69,9 +69,12 @@ public class Scene extends Applet implements KeyListener, Runnable
 		bufferGraphics.setColor(SKY_COLOR);
 		bufferGraphics.fillRect(0, 0, window_width, window_height);
 		floor.draw(bufferGraphics);
-		
-		queen.draw(bufferGraphics);
 		mirror.draw(bufferGraphics);
+		queen.draw(bufferGraphics);
+		Graphics2D g2 = (Graphics2D) bufferGraphics;
+		g2.clip(mirror.inner_shape);
+		snow.draw(bufferGraphics);
+		g2.setClip(null);
 		
 		g_main.drawImage(offscreen, 0, 0, this);
 	}
@@ -82,8 +85,13 @@ public class Scene extends Applet implements KeyListener, Runnable
 	}
 
 	public void keyPressed(KeyEvent ke) {
-		keyState = ke.getKeyCode();
+		int keyState = ke.getKeyCode();
 		queen.key_decide(keyState);
+		if (keyState == KeyEvent.VK_A)
+			keyState = KeyEvent.VK_D;
+		else if (keyState == KeyEvent.VK_D)
+			keyState = KeyEvent.VK_A;
+		snow.key_decide(keyState);
 	}
 
 	public void keyReleased(KeyEvent ke) {}

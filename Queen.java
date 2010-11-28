@@ -5,24 +5,26 @@ import java.lang.Math;
 
 public class Queen {
 	double body_w = 20;
-	double body_h = 100;
+	double body_h = 70;
 	double body_d = 15;
-	double head_size = 40;
+	double head_size = 30;
 	double x, y, z;
 
-	public static final Color FILL_COLOR   = Color.BLACK;
-	public static final Color CONTUR_COLOR = Color.WHITE;
+	Color fill_color;
+	Color contur_color;
 
 	Cub body;
 	Cub head;
 
-	public Queen(double x, double y, double z) {
+	public Queen(double x, double y, double z, Color fill, Color contur) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		this.fill_color = fill;
+		this.contur_color = contur;
 		double angle = (3*Math.PI/4) - Math.toRadians(35);
-		body = new Cub(x, y - body_h/2, z, body_w, body_h, body_d, FILL_COLOR, CONTUR_COLOR);
-		head = new Cub(x, y - body_h - (head_size/2), z, head_size, head_size, head_size, FILL_COLOR, CONTUR_COLOR);
+		body = new Cub(x, y - body_h/2, z, body_w, body_h, body_d, fill_color, contur_color);
+		head = new Cub(x, y - body_h - (head_size/2), z, head_size, head_size, head_size, fill_color, contur_color);
 		
 		body.rotate_by_y(angle, x, y, z);
 		head.rotate_by_y(angle, x, y, z);
