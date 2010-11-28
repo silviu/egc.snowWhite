@@ -10,6 +10,7 @@ public class Scene extends Applet implements KeyListener, Runnable
 	static final int OFFSET_GRID   = 10;
 	static final int BOARD_WIDTH   = 1000;
 	static final int BOARD_HEIGHT  = 600;
+	public static final int OGLINDA_X = 200;
 
 	Image offscreen;
 
@@ -21,9 +22,10 @@ public class Scene extends Applet implements KeyListener, Runnable
 	Thread animator = new Thread(this);
 	public boolean first_time = true;
 	
-	Queen queen = new Queen(600, 300, 3, Color.black, Color.white);
-	Queen snow = new Queen(300, 300, 3, Color.white, Color.black);
-	Mirror mirror = new Mirror(180, 270);
+	Queen queen = new Queen(OGLINDA_X + 230, 350, 3, Color.black, Color.white);
+	SnowWhite snow = new SnowWhite(OGLINDA_X + 190, 350, 3, Color.white, Color.black);
+	Dwarf dwarf = new Dwarf(100, 100, 3, Color.GREEN, Color.black);
+	Mirror mirror = new Mirror(OGLINDA_X, 270);
 	
 	Floor floor = new Floor();
 
@@ -70,11 +72,15 @@ public class Scene extends Applet implements KeyListener, Runnable
 		bufferGraphics.fillRect(0, 0, window_width, window_height);
 		floor.draw(bufferGraphics);
 		mirror.draw(bufferGraphics);
-		queen.draw(bufferGraphics);
+		
+		dwarf.draw(bufferGraphics);
 		Graphics2D g2 = (Graphics2D) bufferGraphics;
 		g2.clip(mirror.inner_shape);
 		snow.draw(bufferGraphics);
 		g2.setClip(null);
+		
+		
+		queen.draw(bufferGraphics);
 		
 		g_main.drawImage(offscreen, 0, 0, this);
 	}
@@ -87,10 +93,6 @@ public class Scene extends Applet implements KeyListener, Runnable
 	public void keyPressed(KeyEvent ke) {
 		int keyState = ke.getKeyCode();
 		queen.key_decide(keyState);
-		if (keyState == KeyEvent.VK_A)
-			keyState = KeyEvent.VK_D;
-		else if (keyState == KeyEvent.VK_D)
-			keyState = KeyEvent.VK_A;
 		snow.key_decide(keyState);
 	}
 

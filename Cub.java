@@ -52,6 +52,7 @@ public class Cub{
     
     public void scale_pitic(double diff) {
     	this.H = H/diff;
+    	calc_points();
     }
     
     public void calc_points() {

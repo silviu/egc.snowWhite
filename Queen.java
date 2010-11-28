@@ -4,22 +4,38 @@ import java.awt.event.KeyEvent;
 import java.lang.Math;
 
 public class Queen {
-	double body_w = 20;
-	double body_h = 70;
-	double body_d = 15;
-	double head_size = 30;
+	public final static int NORMAL_BODY_H = 70;
+	public final static int NORMAL_BODY_D = 15;
+	public final static int NORMAL_BODY_W = 20;
+
+	public final static int NORMAL_HEAD_SIZE = 30;
+	double body_w, body_h, body_d;
+	double head_size;
 	double x, y, z;
+	int n_moves_z = 0;
+	int n_moves_x = 0;
 
 	Color fill_color;
 	Color contur_color;
 
 	Cub body;
 	Cub head;
-
+	
+	public Queen(double x, double y, double z, Color fill, Color contur, double scale) {
+		this(x, y, z, fill, contur, NORMAL_BODY_H*scale, NORMAL_BODY_D*scale, NORMAL_BODY_W*scale, NORMAL_HEAD_SIZE*scale);
+	}
 	public Queen(double x, double y, double z, Color fill, Color contur) {
+		this(x, y, z, fill, contur, 1);
+	}
+
+	public Queen(double x, double y, double z, Color fill, Color contur, double body_h, double body_d, double body_w, double head_size) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		this.body_d = body_d;
+		this.body_w = body_w;
+		this.body_h = body_h;
+		this.head_size = head_size;
 		this.fill_color = fill;
 		this.contur_color = contur;
 		double angle = (3*Math.PI/4) - Math.toRadians(35);
@@ -45,24 +61,7 @@ public class Queen {
 		head.paint(g);
 	}
 	
-	
-
-	public void key_decide(int key) {
-		double dx = 0, dy = 0,dz = 0;
-		switch(key) {
-		case KeyEvent.VK_W:
-			dz = -1;
-			break;
-		case KeyEvent.VK_A:
-			dx = -1;
-			break;
-		case KeyEvent.VK_S:
-			dz = 1;
-			break;
-		case KeyEvent.VK_D:
-			dx = 1;
-			break;
-		}
+	public void update_position(double dx, double dy, double dz) {
 		dx *= 5; dy *= 5; dz *= 5;
 		dx -= dz; dy += dz;
 		head.translate(dx, dy, dz);
@@ -70,5 +69,36 @@ public class Queen {
 		x += dx;
 		z += dz;
 		y += dy;
+	}
+
+	public void key_decide(int key) {
+		double dx = 0, dy = 0,dz = 0;
+		switch(key) {
+		case KeyEvent.VK_W:
+			if (n_moves_z == 18)
+				break;
+			dz = -1;
+			n_moves_z++;
+			break;
+		case KeyEvent.VK_A:
+			if (n_moves_x == 0)
+				break;
+			dx = -1;
+			n_moves_x--;
+			break;
+		case KeyEvent.VK_S:
+			if (n_moves_z == -39)
+				break;
+			dz = 1;
+			n_moves_z--;
+			break;
+		case KeyEvent.VK_D:
+			if (n_moves_x == 90)
+				break;
+			dx = 1;
+			n_moves_x++;
+			break;
+		}
+		update_position(dx, dy, dz);
 	}
 }
