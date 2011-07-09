@@ -1,0 +1,61 @@
+ELEMENTE DE GRAFICA PE CALCULATOR
+
+Tema 2
+Alba ca zapada
+
+Context tema:
+Intr-un castel o regina se uita intr-o oglinda magica. Ea intraba oglinda “cine e cea mai
+frumoasa din lume?” si oglinda ii raspunde ca ea este cea mai frumoasa. Procesul se repeta
+pana intr-o zi in care oglinda ii spune ca este o printesa mai frumoasa decat ea si numele ei
+este Alba ca Zapada. Auzind acest lucru regina suparata pune oglinda magica sa ii arate
+printesa si oglinda o arata pe Alba ca Zapada inconjurata de 7 pitici. Afectata emotional,
+regina incepe sa aiba probleme de perceptie si in loc sa o vada in oglinda pe Alba ca zapada si
+pe pitici in fundalul in care ei sunt in realitate, regina vede urmatoarea scena pe oglinda:
+regina nu mai este, Alba ca Zapada sta exact in locul ei in castel si piticii merg intr-un cerc in
+jurul ei.
+Nota: Atentie la detaliile boldate, se poate gresi cu usurinta din neatentie!
+Nota 2: Pe ultima pagina exista o ilustratie a scenei finale.
+
+Cerinte tema:
+− Scrieti un applet Java care sa implementeze urmatoarele cerinte:
+
+− Intr-un spatiu tridimensional (3D) desenati o regina care se uita la o oglinda.
+Regina sta pe o podea si oglinda are o rama non-liniara – adica rama are grosime
+(oglinda sa fie cat de mare se poate fara sa faca redarea scenei problematica).
+Aveti grija ca tot ce e in scena sa fie vizibil pe ecran.
+
+− Cu tastele WASD se poate misca regina in scena, miscandu-se doar pe podea (adica
+pe planul XOZ, daca se considera OY ca fiind axa sus in scena). Regina se misca
+relativ la scena. Camera este fixa.
+
+− Oglinda va trebuie sa oglindeasca urmatoarea scena: Alba ca zapada sa fie in locul
+reginei (deci daca se misca regina se misca si alba ca zapada) si in jurul ei sa se
+plimbe 7 pitici pe un cerc de raza egala cu jumatatea distantei intre Alba ca zapada
+si oglinda. Oglinda va trebui sa fie orientata exact spre locul in care sta regina (in
+realitate) si Alba ca Zapada(in scena vazuta de oglinda). Alba ca Zapada si piticii
+nu exista in scena reala, sunt doar pe oglinda (desi in mintea reginei ei apar asa
+cum am descris). Oglinda e magica si nu o oglindeste pe regina.
+
+− Piticii sunt egal departati pe cerc ( adica arcul de cerc intre oricare doi pitici
+consecutivi are lungimea 2 * 3.14 * R /7 unde R e raza cercului)
+
+− In coltul din stanga sus al ecranului trebuie sa scrie care este obiectul selectat (cu
+mouse-ul): podea, background, regina. Cand vor fi selectate podeaua sau
+background-ul sau regina se va scrie: “selectat podea” sau “selectat background”
+sau “selectat regina”.
+
+
+Precizari pentru desenare:
+− Toate modelele (Regina, Alba ca zapada, Piticii) sunt desenate astfel: au un
+paralelipiped lung si subtire pe post de corp si o cub pe post de cap. Toate
+modelele “calca” pe podea (adica sunt desenate vertical, cubul in sus)
+
+− Piticii sunt de doua ori mai scunzi (deci nu sunt scalati decat pe inaltime) decat
+regina/Alba ca Zapada.
+
+− Culori orientative scena: podeaua e gri, background-ul este gri deschis, regina e
+neagra, alba ca zapada e alba, piticii sunt verzi iar oglinda are rama de culoare roz.
+Bonus:
+− Sa se poata selecta Alba ca zapada si piticii din oglinda (tot cu mouse-ul).
+− Cand va fi selectata Alba ca zapada sau piticii se va scrie: “Selectat Alba ca zapada
+din oglinda”, “Selectat piticul nr x din oglinda”.
